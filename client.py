@@ -77,6 +77,10 @@ while True:
       clientSocket.send(b'Please')
       fb4 =clientSocket.recv(2048).decode()
       print(fb4)
+      clientSocket.send(b'Total?')
+      fb5 = clientSocket.recv(2048).decode()
+      print("Total-> ")
+      print(fb5)
      #receive receipt file
     print('Session Ended')
     exit(0)
