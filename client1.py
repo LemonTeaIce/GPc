@@ -2,7 +2,7 @@ import socket
 import json
 import sys
 import os
-
+import struct
 
 clientSocket = socket.socket()
 host = "192.168.240.8"
@@ -15,15 +15,15 @@ except socket.error as e:
 	print (str(e))
 
 response = clientSocket.recv(1024).decode()
-opt1 = input("Name:")
-clientSocket.send(str.encode(opt1))
-name1 = clientSocket.recv(2048).decode()
-no = input("Number Phone:")
-clientSocket.send(str.encode(no))
-num = clientSocket.recv(2048).decode()
+#opt1 = input("Name:")
+#clientSocket.send(str.encode(opt1))
+#name1 = clientSocket.recv(2048).decode()
+#no = input("Number Phone:")
+#clientSocket.send(str.encode(no))
+#num = clientSocket.recv(2048).decode()
 d = json.loads(response)
-while True:
 
+while True:
 
   print ("Skincare Supplier")
   print ("-----------------")
@@ -48,10 +48,13 @@ while True:
     quantity = input('Number quantity:')
     clientSocket.send(str.encode(quantity))
     product = clientSocket.recv(2048).decode()
+    print ("\n*---------------------------------*")
     print ("Product select:",product)
     result = clientSocket.recv(2048).decode()
+    amount,total = result.split('-')
+    print ("Product sum:RM ",amount)
     print ("Order Total:",result,)
-    print ("*-----------------*\n")
+    print ("*-----------------------------------*\n")
     #ans = input("Do you want to delete item?")
     #clientSocket.send(str.encode(ans))
 
@@ -89,7 +92,7 @@ while True:
         print(fb4)
         clientSocket.send(b'Total?')
         fb5 = clientSocket.recv(2048).decode()
-        print("Total-> ")
+        print("\nTotal-> :RM ")
         print(fb5)
 
     else:
@@ -102,18 +105,14 @@ while True:
       print ("The Total Price(RM): ")
       print (fb11)
       
-     #receive receipt file
-<<<<<<< HEAD
-=======
+    #receive receipt file
     received = clientSocket.recv(1024).decode()
     filename = received
     with open(filename,"wb") as f:
-      
-      data = clientSocket.recv(1024)
-      f.write(data)
-      f.close()
+       data = clientSocket.recv(1024)
+       f.write(data)
+       f.close()
 
->>>>>>> msg
     print('Session Ended')
     exit(0)
 
